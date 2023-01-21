@@ -59,24 +59,24 @@ pipeline {
         }
         stage('acr login'){
             steps{
-                sh 'az acr login --name myregistrysapient'
+                sh 'az acr login --name capstoneprojectdemoacr'
             }
         }
         stage('docker build') {
             steps {
-                sh 'docker build -t myregistrysapient.azurecr.io/chatapp:latest .'
+                sh 'docker build -t capstoneprojectdemoacr.azurecr.io/chatapp:latest .'
             }
         }
         stage('Scan Image'){
             steps{
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'docker scan --accept-license --severity low myregistrysapient.azurecr.io/chatapp:latest'
+                    sh 'docker scan --accept-license --severity low capstoneprojectdemoacr.azurecr.io/chatapp:latest'
                 }
             }
         }
         stage('docker push') {
             steps {
-                sh 'docker push myregistrysapient.azurecr.io/chatapp:latest'
+                sh 'docker push capstoneprojectdemoacr.azurecr.io/chatapp:latest'
             }
         }
     }
