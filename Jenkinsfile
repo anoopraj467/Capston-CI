@@ -13,40 +13,35 @@ pipeline {
         }
         stage('mvn test') {
             steps {
-                sh 'echo "hello"'
-                // sh 'mvn test'
-                // junit 'target/surefire-reports/*.xml'
+                sh 'mvn test'
+                junit 'target/surefire-reports/*.xml'
             }
         }
         stage('checkstyle') {
             steps {
-                sh 'echo "hello"'
-                // sh 'mvn checkstyle:checkstyle'
-                // recordIssues(tools: [checkStyle(pattern: '**/checkstyle-result.xml')])
+                sh 'mvn checkstyle:checkstyle'
+                recordIssues(tools: [checkStyle(pattern: '**/checkstyle-result.xml')])
             }
         }
         stage('code coverage') {
             steps {
-                sh 'echo "hello"'
-                // jacoco()
+                jacoco()
             }
         }
         stage("Sonar Testing"){
             steps{
-                sh 'echo "hello"'
-            //     withSonarQubeEnv('sonarqube-9') {
-            //     sh ' mvn clean verify sonar:sonar -Dsonar.projectKey=testapp'
-            //   }
+                withSonarQubeEnv('sonarqube-9') {
+                sh ' mvn clean verify sonar:sonar -Dsonar.projectKey=testapp'
+              }
             }
         }
         stage("Quality gate") {
             steps {
-                sh 'echo "hello"'
-            //   retry (5) {
-            //     timeout(time: 30, unit: 'SECONDS') {
-            //         waitForQualityGate abortPipeline: true
-            //     }
-            //   }
+              retry (5) {
+                timeout(time: 30, unit: 'SECONDS') {
+                    waitForQualityGate abortPipeline: true
+                }
+              }
             }
         }
         stage("Upload To Nexus"){
