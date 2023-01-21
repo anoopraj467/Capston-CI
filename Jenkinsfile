@@ -51,8 +51,7 @@ pipeline {
                 filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
                     echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
                     artifactPath = filesByGlob[0].path;
-                    }
-
+                    }  
                 nexusArtifactUploader artifacts: [[artifactId:pom.artifactId, classifier: '', file: artifactPath, type: pom.packaging]], credentialsId: 'nexus-cred', groupId: pom.artifactId, nexusUrl: '170.187.252.6:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-snapshots', version: pom.version
             }
         }
