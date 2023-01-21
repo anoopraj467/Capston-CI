@@ -46,7 +46,6 @@ pipeline {
         }
         stage("Upload To Nexus"){
             steps{
-                 sh 'echo "HEllo"'
                 script {
                  pom = readMavenPom file: "pom.xml";
                 filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
