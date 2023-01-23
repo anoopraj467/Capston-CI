@@ -1,11 +1,6 @@
 pipeline {
     agent any
     stages {
-//         stage("poll scm"){
-//             steps{
-//                git credentialsId: 'git-key', url: 'git@github.com:shubhamghavas/chat-app-sapient.git'
-//             }
-//         }
         stage('mvn build') {
             steps {
                 sh 'mvn -B -DskipTest clean package'
