@@ -59,21 +59,21 @@ pipeline {
                 }
             }
         }
-        // stage('Login to ACR'){
-        //     steps{
-        //         sh 'az acr login --name capstonacr'
-        //     }
-        // }
-        // stage('Build Docker Image'){
-        //     steps{
-        //         sh ' docker build -t capstonacr.azurecr.io/chatapp:latest .'
-        //     }
-        // }
-        // stage('Push to ACR'){
-        //     steps{
-        //         sh 'docker push capstonacr.azurecr.io/chatapp:latest'
-        //     }
-        // }
+        stage('Login to ACR'){
+            steps{
+                sh 'az acr login --name capstonacr'
+            }
+        }
+        stage('Build Docker Image'){
+            steps{
+                sh ' docker build -t capstonacr.azurecr.io/chatapp:latest .'
+            }
+        }
+        stage('Push to ACR'){
+            steps{
+                sh 'docker push capstonacr.azurecr.io/chatapp:latest'
+            }
+        }
         // stage('Configure Http-Routing'){
         //     steps{
         //         sh 'az aks enable-addons --resource-group capston-res --name capston-aks --addons http_application_routing'
