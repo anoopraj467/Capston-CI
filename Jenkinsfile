@@ -32,17 +32,6 @@ pipeline {
                 jacoco()
             }
         }
-         stage('Nexus'){
-            steps{
-            script{
-                pom = readMavenPom file: "pom.xml";
-                filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
-                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
-                    artifactPath = filesByGlob[0].path;
-            }
-                nexusArtifactUploader artifacts: [[artifactId: 'websocket-demo', classifier: '', file: 'target/websocket-demo-0.0.1-SNAPSHOT.jar', type: 'jar']], credentialsId: 'nexus-cred', groupId: 'demo', nexusUrl: '4.246.148.46:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-snapshots', version: '0.0.1-SNAPSHOT'
-            }
-        }
         stage('SonarQube Analysis'){
             steps{
                 script{
@@ -57,6 +46,17 @@ pipeline {
                 script{
                     waitForQualityGate abortPipeline: false, credentialsId: 'sonarqube-token'
                 }
+            }
+        }
+        stage('Nexus'){
+            steps{
+            script{
+                pom = readMavenPom file: "pom.xml";
+                filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
+                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
+                    artifactPath = filesByGlob[0].path;
+            }
+                nexusArtifactUploader artifacts: [[artifactId: 'websocket-demo', classifier: '', file: 'target/websocket-demo-0.0.1-SNAPSHOT.jar', type: 'jar']], credentialsId: 'nexus-cred', groupId: 'demo', nexusUrl: '4.246.148.46:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-snapshots', version: '0.0.1-SNAPSHOT'
             }
         }
         stage('Login to ACR'){
