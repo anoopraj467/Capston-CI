@@ -95,11 +95,6 @@ pipeline {
         //     }
         // }
         
-        // stage('Kubernetes'){
-        //     steps{
-        //         sh 'kubectl apply -f deploy1.yml'
-        //     }
-        // }
 
     }
 }
