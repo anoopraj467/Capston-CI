@@ -89,11 +89,6 @@ pipeline {
         //     }
         // }
         
-        // stage("Clean up"){
-        //     steps{
-        //         sh 'rm /var/lib/jenkins/.kube/config'
-        //     }
-        // }
         
 
     }
